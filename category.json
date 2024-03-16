@@ -1,0 +1,34 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Шины",
+      "description": "Летние"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Диски",
+      "description": "Литые"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Гайки",
+      "description": "Колесные"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Аксессуары",
+      "description": "Автомобильные"
+    }
+  }
+]
