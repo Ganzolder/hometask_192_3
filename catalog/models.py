@@ -5,8 +5,10 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Category(models.Model):
+    #objects = None
     name = models.CharField(max_length=250, verbose_name='Категория')
     description = models.TextField(verbose_name='Описание', **NULLABLE)
+    objects = models.Manager()
 
     def __str__(self):
         return f'{self.name}'
@@ -24,6 +26,7 @@ class Product(models.Model):
     price_per_unit = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Цена')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    objects = models.Manager()
 
     def __str__(self):
         return f'{self.name} ({self.category})'
