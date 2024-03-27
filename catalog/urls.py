@@ -8,8 +8,8 @@ app_name = MainConfig.name
 urlpatterns = [
     path('', index),
     path('contacts/', contacts, name='contacts'),
-    path('<int:pk>/products_catalog/', products_catalog, name='products_catalog'),
-    path('product_page/', product_page, name='product_page'),
+    path('products_catalog/<int:pk>/', products_catalog, name='products_catalog'),
+    path('product_page/<int:pk>/', product_page, name='product_page'),
     path('category_catalog/', category_catalog, name='category_catalog'),
 
 ]

@@ -18,7 +18,7 @@ def products_catalog(request, pk):
 
     context = {
         'object_list': Product.objects.filter(category_id=pk),
-        'title' : f'Yoni products catalogue{category_item}'
+        'title' : f'Yoni products catalogue {category_item}'
     }
     return render(request, 'main/products_catalog.html', context)
 
@@ -30,9 +30,11 @@ def category_catalog(request):
     return render(request, 'main/category_catalog.html', context)
 
 
-def product_page(request):
+def product_page(request, pk):
+
     context = {
-        'object_list': Product.objects.all(),
+        'product_page': Product.objects.get(pk=pk),
         'title': 'Yoni product page'
     }
     return render(request, 'main/product_page.html', context)
+
