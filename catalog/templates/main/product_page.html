@@ -1,9 +1,25 @@
 ﻿{% extends 'main/base_catalog.html' %}
 
 {% block content %}
+
+
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-    {% for object in object_list %}
-    {% include 'main/includes/inc_list.html' %}
-    {% endfor %}
+
+
+    <div class="card-body">
+        <p class="card-text">{{ object.description|slice:":100" }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                {% for product in product_info %}
+                <img src="{{ product.preview.url }}" alt="{{ product.name }}" width="300" height="300">
+                <p>Название: {{ product.name }}</p>
+                <p>Описание: {{ product.description }}</p>
+                <p>Цена: {{ product.price_per_unit }}</p>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
 </div>
 {% endblock %}

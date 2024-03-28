@@ -34,6 +34,7 @@ def product_page(request, pk):
 
     context = {
         'product_page': Product.objects.get(pk=pk),
+        'product_info' : Product.objects.filter(pk=pk),
         'title': 'Yoni product page'
     }
     return render(request, 'main/product_page.html', context)
