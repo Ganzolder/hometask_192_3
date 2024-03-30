@@ -11,7 +11,7 @@
         <div class="d-flex justify-content-between align-items-center">
             <div>
                 {% for product in product_info %}
-                <img src="{{ product.preview.url }}" alt="{{ product.name }}" width="300" height="300">
+                <img src="{{ product.preview|media}}" alt="{{ product.name }}" width="300" height="300">
                 <p>Название: {{ product.name }}</p>
                 <p>Описание: {{ product.description }}</p>
                 <p>Цена: {{ product.price_per_unit }}</p>
