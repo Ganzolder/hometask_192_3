@@ -1,16 +1,17 @@
 from django.shortcuts import render
 from catalog.models import Category, Product
+from django.views.generic import ListView
 
 # Create your views here.
 def index(request):
-    return render(request, 'main/index.html')
+    return render(request, 'catalog/index.html')
 
 def contacts(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
         print(f'{name}, {email}')
-    return render(request, 'main/contacts.html')
+    return render(request, 'catalog/contacts.html')
 
 def products_catalog(request, pk):
 
@@ -20,15 +21,14 @@ def products_catalog(request, pk):
         'object_list': Product.objects.filter(category_id=pk),
         'title' : f'Yoni products catalogue {category_item}'
     }
-    return render(request, 'main/products_catalog.html', context)
+    return render(request, 'catalog/products_catalog.html', context)
 
-def category_catalog(request):
-    context = {
-        'object_list': Category.objects.all(),
-        'title' : 'Yoni category catalogue'
+
+class CategoryListView(ListView):
+    model = Category
+    extra_context = {
+        'title' : 'Категории товаров'
     }
-    return render(request, 'main/category_catalog.html', context)
-
 
 def product_page(request, pk):
 
@@ -37,5 +37,5 @@ def product_page(request, pk):
         'product_info' : Product.objects.filter(pk=pk),
         'title': 'Yoni product page'
     }
-    return render(request, 'main/product_page.html', context)
+    return render(request, 'catalog/product_page.html', context)
 
