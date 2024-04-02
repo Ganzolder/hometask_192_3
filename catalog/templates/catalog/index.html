@@ -1,51 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {% load static %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
-<body class="bg-dark" style="background-image: url('{% static 'images/screenshot_1.jpg' %}')">
+﻿{% extends 'catalog/base.html' %}
 
-<div class="container-fluid bg-dark p-5 bg-opacity-50 text-white text-center" style='height: 250px;'>
-    <h1>Yoni steam</h1>
-    <p>Relaxation is at your fingertips, well, almost</p>
-</div>
-
-<div class="container-fluid bg-secondary p-3 text-center text-light">
-
-        <a href='category_catalog' class="btn btn-primary">Yoni store</a>
+{% block content %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for object in object_list %}
+        {% include 'catalog/includes/inc_list.html' %}
+        {% endfor %}
     </div>
-<div class="container-fluid">
-
-    <div class="row">
-        <div class="col-sm-12 bg-light text-dark p-5">
-            <h1 align="center">What is Vaginal Steaming?</h1>
-            <p>Vaginal steaming is an ancient practice that is thought to be beneficial in cleansing the vagina and
-                uterus, regulating the menstrual cycle, easing the pain of period cramps and bloating, and aiding in
-                healing and soothing after childbirth. The practice can also be very meditative.</p>
-
-            <p>The Yoni steam process involves sitting over a steaming pot of herb-infused water, generally for about
-                10-30 minutes per session depending on your body’s constitution and menstrual cycle history. As the
-                steam rises and the herbs penetrate vaginal tissue, it is thought that the vagina and uterus are
-                cleansed and soothed.</p>
-
-            <p>You can receive your vaginal steam session as a spa treatment or at home. We encourage you to connect
-                with a practitioner for further support, instructions, and personalized yoni steam herb recipe
-                recommendations.</p>
-
-        </div>
-    </div>
-</div>
-<div class="container-fluid p-5">
-    <h5></h5>
-</div>
-<div class="container-fluid bg-secondary p-5 text-center text-light">
-    <h3>Wildwood Birth Collective
-        Doulas in Portland, Oregon</h3>
-    <a href='contacts' class="btn btn-primary">Our contacts</a>
-</div>
-</body>
-</html>
+{% endblock %}
