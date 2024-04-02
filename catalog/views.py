@@ -4,7 +4,11 @@ from django.views.generic import ListView
 
 # Create your views here.
 def index(request):
-    return render(request, 'catalog/index.html')
+    context = {
+        'object_list': Category.objects.all()[:3],
+        'title': 'Главная',
+    }
+    return render(request, 'catalog/index.html', context)
 
 def contacts(request):
     if request.method == 'POST':
@@ -19,23 +23,25 @@ def products_catalog(request, pk):
 
     context = {
         'object_list': Product.objects.filter(category_id=pk),
-        'title' : f'Yoni products catalogue {category_item}'
+        'title' : f'Товары категории {category_item}'
     }
     return render(request, 'catalog/products_catalog.html', context)
 
 
-class CategoryListView(ListView):
-    model = Category
-    extra_context = {
-        'title' : 'Категории товаров'
+def category_list(request):
+    context = {
+        'object_list': Category.objects.all(),
+        'title': 'Категории товаров',
     }
+    return render(request, 'catalog/category_list.html', context)
 
 def product_page(request, pk):
-
+    product_item = Product.objects.get(pk=pk)
+    category_item = Category.objects.get(pk=pk)
     context = {
         'product_page': Product.objects.get(pk=pk),
         'product_info' : Product.objects.filter(pk=pk),
-        'title': 'Yoni product page'
+        'title': f'{category_item.name} {product_item.name}'
     }
     return render(request, 'catalog/product_page.html', context)
 

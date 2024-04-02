@@ -2,9 +2,9 @@
 from django.conf import settings
 
 def page_type(request):
-    if '/category_catalog/' in request.path:
-        page_type = 'catalog'
+    if 'products_catalog' in request.path:
+        page_type = 'products_catalog'
     else:
-        page_type = 'product'
+        page_type = 'catalog'
 
     return {'page_type': page_type}

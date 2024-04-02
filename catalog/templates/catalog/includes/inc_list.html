@@ -12,12 +12,12 @@
             <p class="card-text">{{ object.description|slice:":100" }}</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    {% if page_type == 'catalog' %}
-                    <a href="{% url 'catalog:products_catalog' object.pk %}" type="button"
-                       class="btn btn-sm btn-outline-secondary">Посмотреть</a>
-                    {% else %}
+                    {% if page_type == 'products_catalog' %}
                     <a href="{% url 'catalog:product_page' object.pk %}" type="button"
                        class="btn btn-sm btn-outline-secondary">Посмотреть товар</a>
+                    {% else %}
+                    <a href="{% url 'catalog:products_catalog' object.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Посмотреть</a>
                     {% endif %}
                 </div>
 
