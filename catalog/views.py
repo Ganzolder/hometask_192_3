@@ -1,47 +1,68 @@
 from django.shortcuts import render
 from catalog.models import Category, Product
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, TemplateView
 
-# Create your views here.
-def index(request):
-    context = {
-        'object_list': Category.objects.all()[:3],
-        'title': 'Главная',
-    }
-    return render(request, 'catalog/index.html', context)
 
-def contacts(request):
-    if request.method == 'POST':
+class IndexListView(ListView):
+    model = Category
+
+    def get_queryset(self):
+        return super().get_queryset()[:3]
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['title'] = f'Главная'
+
+        return context_data
+
+
+class ContactTemplateView(TemplateView):
+    template_name = 'catalog/contacts_template.html'
+
+    def post(self, request, *args, **kwargs):
+
         name = request.POST.get('name')
         email = request.POST.get('email')
         print(f'{name}, {email}')
-    return render(request, 'catalog/contacts.html')
 
-def products_catalog(request, pk):
+        return render(request, 'catalog/contacts.html')
 
-    category_item = Category.objects.get(pk=pk)
 
-    context = {
-        'object_list': Product.objects.filter(category_id=pk),
-        'title' : f'Товары категории {category_item}'
+class ProductsListView(ListView):
+    model = Product
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(category_id=self.kwargs.get('pk'))
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        category_item = Category.objects.get(pk=self.kwargs.get('pk'))
+        context_data['category_pk'] = category_item.pk
+        context_data['title'] = f'Товары категории {category_item}'
+
+        return context_data
+
+
+class CategoryListView(ListView):
+    model = Category
+    extra_context = {
+        'title': 'Категории товаров'
     }
-    return render(request, 'catalog/products_catalog.html', context)
 
 
-def category_list(request):
-    context = {
-        'object_list': Category.objects.all(),
-        'title': 'Категории товаров',
-    }
-    return render(request, 'catalog/category_list.html', context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_page.html'
 
-def product_page(request, pk):
-    product_item = Product.objects.get(pk=pk)
-    category_item = Category.objects.get(pk=pk)
-    context = {
-        'product_page': Product.objects.get(pk=pk),
-        'product_info' : Product.objects.filter(pk=pk),
-        'title': f'{category_item.name} {product_item.name}'
-    }
-    return render(request, 'catalog/product_page.html', context)
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
 
+        category_item = Category.objects.get(pk=self.kwargs.get('pk'))
+        context_data['category_pk'] = category_item.pk
+        context_data['title'] = f'Товары категории {category_item}'
+
+        return context_data

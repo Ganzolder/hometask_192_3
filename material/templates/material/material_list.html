@@ -1,0 +1,12 @@
+﻿{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="col-12 mb-5">
+        <a href="{% url 'material:create' %}" type="button", class="btn btn-sm btn-outline-primary">Добавить материал</a>
+    </div>
+    {% for object in object_list %}
+    {% include 'material/includes/inc_material_list.html' %}
+    {% endfor %}
+</div>
+{% endblock %}

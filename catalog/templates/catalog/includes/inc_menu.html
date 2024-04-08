@@ -1,9 +1,10 @@
 ﻿<div class="col-sm-4 offset-md-1 py-4">
     <h4>Menu</h4>
     <ul class="list-unstyled">
-        <li><a href="{% url 'catalog:index' %}" class="text-dark">Главная</a></li>
+        <li><a href="{% url 'catalog:index_list' %}" class="text-dark">Главная</a></li>
         <li><a href="{% url 'catalog:category_list' %}" class="text-dark">Категории</a></li>
-        <li><a href="{% url 'catalog:contacts' %}" class="text-dark">Контакты</a></li>
+        <li><a href="{% url 'catalog:contacts_template' %}" class="text-dark">Контакты</a></li>
+        <li><a href="{% url 'material:list' %}" class="text-dark">Материалы</a></li>
 
     </ul>
 </div>
