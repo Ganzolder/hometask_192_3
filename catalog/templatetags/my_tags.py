@@ -8,4 +8,4 @@ def mymedia(val):
     if val:
         return f'/media/{val}'
 
-    return '#'
+    return f'/media/empty.png'

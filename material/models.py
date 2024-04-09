@@ -1,5 +1,6 @@
 from django.db import models
 
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -20,3 +21,4 @@ class Material(models.Model):
     class Meta:
         verbose_name = 'материал'
         verbose_name_plural = 'материалы'
+

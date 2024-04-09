@@ -1,7 +1,7 @@
 from django.urls import path
 from material.apps import MaterialConfig
 from material.views import (MaterialCreateView, MaterialListView, MaterialDetailView, MaterialUpdateView,
-                            MaterialDeleteView)
+                            MaterialDeleteView, toggle_activity)
 
 
 app_name = MaterialConfig.name
@@ -12,4 +12,5 @@ urlpatterns = [
     path('view/<int:pk>/', MaterialDetailView.as_view(), name='view'),
     path('edit/<int:pk>/', MaterialUpdateView.as_view(), name='edit'),
     path('delete/<int:pk>/', MaterialDeleteView.as_view(), name='delete'),
+    path('activity/<int:pk>/', toggle_activity, name='toggle_activity'),
 ]
