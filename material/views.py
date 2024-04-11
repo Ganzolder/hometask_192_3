@@ -26,7 +26,13 @@ class MaterialCreateView(CreateView):
     fields = ('title', 'body',)
     success_url = reverse_lazy('material:list')
 
+    def form_valid(self, form):
+        if form.is_valid():
+            new_mat = form.save()
+            new_mat.slug = slugify(new_mat.title)
+            new_mat.save()
 
+        return super().form_valid(form)
 
 
 
