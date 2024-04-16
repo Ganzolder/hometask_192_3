@@ -27,7 +27,7 @@
                     <a href="{% url 'material:delete' object.pk %}" type="button"
                        class="btn btn-sm btn-outline-secondary">Удалить</a>
                 </div>
-                {% if object.is_active %}
+                {% if object.is_published %}
                 <a href="{% url 'material:toggle_activity' object.pk %}" type="button"
                    class="btn btn-sm btn-outline-secondary">Опубликовано</a>
                 {% else %}

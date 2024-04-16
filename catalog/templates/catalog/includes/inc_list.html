@@ -1,24 +1,33 @@
 ﻿<div class="col">
+
+
     <div class="card shadow-sm;">
         <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-             xmlns={{ object.preview.url }} role="img" aria-label="Placeholder: Thumbnail"
+             xmlns={{ ... }} role="img" aria-label="Placeholder: Thumbnail"
              preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
             <rect width="100%" height="100%" fill="#55595c"/>
 
             <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ object.name }}</text>
 
         </svg>
+
+
         <div class="card-body">
             <p class="card-text">{{ object.description|slice:":100" }}</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                     {% if page_type == 'products_catalog' %}
                     <a href="{% url 'catalog:product_page' object.pk %}" type="button"
-                       class="btn btn-sm btn-outline-secondary">Посмотреть товар</a>
+                       class="btn btn-sm btn-primary">Посмотреть товар</a>
+
+                            <a href="{% url 'catalog:edit_product' object.pk %}" type="button" ,
+                               class="btn btn-sm btn-outline-secondary">Изменить товар</a>
+
                     {% else %}
                     <a href="{% url 'catalog:products_list' object.pk %}" type="button"
                        class="btn btn-sm btn-outline-secondary">Посмотреть</a>
                     {% endif %}
+
                 </div>
 
             </div>
