@@ -3,11 +3,22 @@
 from catalog.models import Product, Versions
 
 
-class ProductForm(forms.ModelForm):
+class StyleFormMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if isinstance(field, forms.BooleanField):
+                field.widget.attrs['class'] = 'form-check-input'
+            else:
+                field.widget.attrs['class'] = 'form-control'
+
+
+class ProductForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Product
         fields = ('category', 'name', 'description', 'price_per_unit', 'preview')
+
 
     def clean(self):
         cleaned_data = super().clean()
@@ -25,8 +36,9 @@ class ProductForm(forms.ModelForm):
         return cleaned_data
 
 
-class VersionForm(forms.ModelForm):
+class VersionForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Versions
         fields = '__all__'
+

@@ -39,7 +39,7 @@ class Product(models.Model):
 class Versions(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='versions', verbose_name=('Продукт'))
-
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     version_name = models.CharField(max_length=100, verbose_name=('Название версии'))
     specs = models.TextField(verbose_name='Описание', **NULLABLE)
     version_number = models.CharField(max_length=50, verbose_name=('Номер версии'))
@@ -47,7 +47,7 @@ class Versions(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return f'{self.name} ({self.category})'
+        return f'{self.version_name} ({self.product})'
 
     class Meta:
         verbose_name = 'Версия'

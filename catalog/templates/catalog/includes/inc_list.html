@@ -20,8 +20,20 @@
                     <a href="{% url 'catalog:product_page' object.pk %}" type="button"
                        class="btn btn-sm btn-primary">Посмотреть товар</a>
 
-                            <a href="{% url 'catalog:edit_product' object.pk %}" type="button" ,
-                               class="btn btn-sm btn-outline-secondary">Изменить товар</a>
+                    <a href="{% url 'catalog:edit_product' object.pk %}" type="button"
+                       class="btn btn-sm btn-outline-secondary">Изменить товар</a>
+                    {% if object.versions.all %}
+                    {% for version in object.versions.all %}
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        {% if version.is_current %}
+                        <li> Название версии: {{version.version_name}}</li>
+                        <li> Номер версии: {{version.version_number}}</li>
+                        {% endif %}
+                    </ul>
+                    {% endfor %}
+                    {% else %}
+                    <li> Нет активной версии</li>
+                    {% endif %}
 
                     {% else %}
                     <a href="{% url 'catalog:products_list' object.pk %}" type="button"
