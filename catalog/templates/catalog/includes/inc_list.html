@@ -23,6 +23,7 @@
                     <a href="{% url 'catalog:edit_product' object.pk %}" type="button"
                        class="btn btn-sm btn-outline-secondary">Изменить товар</a>
                     {% if object.versions.all %}
+
                     {% for version in object.versions.all %}
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         {% if version.is_current %}
@@ -34,11 +35,13 @@
                     {% else %}
                     <li> Нет активной версии</li>
                     {% endif %}
-
+                    <a href="{% url 'catalog:product_delete' object.pk %}" type="button"
+                       class="btn btn-sm btn-block btn-outline-danger">Удалить товар</a>
                     {% else %}
                     <a href="{% url 'catalog:products_list' object.pk %}" type="button"
                        class="btn btn-sm btn-outline-secondary">Посмотреть</a>
                     {% endif %}
+
 
                 </div>
 

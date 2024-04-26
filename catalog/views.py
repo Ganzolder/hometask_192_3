@@ -118,10 +118,7 @@ class ProductUpdateView(UpdateView):
                 instance.save()
         return super().form_valid(form)
 
-    '''        formset = self.get_context_data()["formset"]
-self.object = form.save()
-'''
 
 class ProductDeleteView(DeleteView):
     model = Product
-    success_url = reverse_lazy("catalog:home")
+    success_url = reverse_lazy("catalog:category_list")

@@ -1,0 +1,12 @@
+﻿{% extends 'catalog/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+    <h2>Удаление продукта</h2>
+    <p>Вы уверены, что хотите удалить продукт "{{ object }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+        <a href="{% url 'catalog:category_list' %}">Отмена</a>
+    </form>
+{% endblock %}
