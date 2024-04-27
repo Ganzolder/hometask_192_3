@@ -19,9 +19,10 @@
                     {% if page_type == 'products_catalog' %}
                     <a href="{% url 'catalog:product_page' object.pk %}" type="button"
                        class="btn btn-sm btn-primary">Посмотреть товар</a>
-
+                    {% if user.is_authenticated %}
                     <a href="{% url 'catalog:edit_product' object.pk %}" type="button"
                        class="btn btn-sm btn-outline-secondary">Изменить товар</a>
+                    {% endif %}
                     {% if object.versions.all %}
 
                     {% for version in object.versions.all %}
@@ -35,8 +36,10 @@
                     {% else %}
                     <li> Нет активной версии</li>
                     {% endif %}
+                    {% if user.is_authenticated %}
                     <a href="{% url 'catalog:product_delete' object.pk %}" type="button"
                        class="btn btn-sm btn-block btn-outline-danger">Удалить товар</a>
+                    {% endif %}
                     {% else %}
                     <a href="{% url 'catalog:products_list' object.pk %}" type="button"
                        class="btn btn-sm btn-outline-secondary">Посмотреть</a>

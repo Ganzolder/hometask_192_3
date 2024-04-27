@@ -1,11 +1,21 @@
+import secrets
+
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from pytils.translit import slugify
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Versions
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
+
+from config import settings
+from users.models import User
 
 
 class IndexListView(ListView):
@@ -76,22 +86,20 @@ class ProductDetailView(DetailView):
         return context_data
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(CreateView, LoginRequiredMixin):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:category_list')
-    #success_url = reverse_lazy('catalog:products_list', args=[self.kwargs.get('pk')])
 
-    '''def form_valid(self, form):
-        if form.is_valid():
-            new_mat = form.save()
-            new_mat.slug = slugify(new_mat.title)
-            new_mat.save()
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
 
-        return super().form_valid(form)'''
+        return super().form_valid(form)
 
-
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(UpdateView, LoginRequiredMixin):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:category_list')
@@ -119,6 +127,17 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(DeleteView, LoginRequiredMixin):
     model = Product
     success_url = reverse_lazy("catalog:category_list")
+
+    import secrets
+    from django.contrib.auth.models import User
+    from django.contrib.auth.hashers import make_password
+    from django.core.mail import send_mail
+    from django.shortcuts import render
+    from django.views import View
+
+
+
+

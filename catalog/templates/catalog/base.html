@@ -194,7 +194,9 @@
         </div>
     </div>
     <div class="navbar navbar-dark bg-dark shadow-sm">
+
         <div class="container">
+
             <a href="#" class="navbar-brand d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
                      stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
@@ -203,11 +205,19 @@
                     <circle cx="12" cy="13" r="4"/>
                 </svg>
                 <strong>Галерея</strong>
+                {% if user.is_authenticated %}
+                <a href="{% url 'users:logout' %}" class="text-light">Выход</a>
+                {% else %}
+                <li><a href="{% url 'users:login' %}" class="text-light">Вход</a>
+                <a href="{% url 'users:register' %}" class="text-light">Регистрация</a></li>
+                {% endif %}
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
         </div>
     </div>
 </header>

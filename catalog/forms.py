@@ -18,6 +18,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Product
         fields = ('category', 'name', 'description', 'price_per_unit', 'preview')
+        exclude = ("views_counter", "owner")
 
 
     def clean(self):
