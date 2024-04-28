@@ -18,7 +18,18 @@
                 <p>Категория: {{ product.category }}</p>
                 <p>Создан: {{ product.created_at }}</p>
                 <p>Изменен: {{ product.updated_at }}</p>
-
+                {% if perms.catalog.change_category %}
+                <a href="{% url 'catalog:edit_category' object.pk %}" type="button"
+                   class="btn btn-sm btn-block btn-outline-primary">Изменить категорию</a>
+                {% endif %}
+                {% if perms.catalog.change_description %}
+                <a href="{% url 'catalog:edit_description' object.pk %}" type="button"
+                   class="btn btn-sm btn-block btn-outline-primary">Изменить описание</a>
+                {% endif %}
+                {% if perms.catalog.set_published %}
+                <a href="{% url 'catalog:edit_publish' object.pk %}" type="button"
+                   class="btn btn-sm btn-block btn-outline-primary">Опубликовано</a>
+                {% endif %}
 
 
             </div>

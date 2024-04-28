@@ -1,5 +1,5 @@
 from django.contrib import admin
-from catalog.models import Product, Category
+from catalog.models import Product, Category, Versions
 
 
 @admin.register(Category)
@@ -15,3 +15,11 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
 
 
+@admin.register(Versions)
+class VersionAdmin(admin.ModelAdmin):
+    list_display = (
+        "product",
+        "version_number",
+        "version_name",
+        "is_current",
+    )

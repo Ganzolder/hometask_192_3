@@ -20,22 +20,38 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         fields = ('category', 'name', 'description', 'price_per_unit', 'preview')
         exclude = ("views_counter", "owner")
 
-
     def clean(self):
         cleaned_data = super().clean()
         name = cleaned_data.get('name')
         description = cleaned_data.get('description')
         forbidden_words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция',
                            'радар']
-
-        for word in forbidden_words:
-            if word in name:
-                self.add_error('name', f'Слово "{word}" запрещено в поле "Name".')
-            if word in description:
-                self.add_error('description', f'Слово "{word}" запрещено в поле "Description".')
+        if type(forbidden_words) is bool:
+            for word in forbidden_words:
+                if word in name:
+                    self.add_error('name', f'Слово "{word}" запрещено в поле "Name".')
+                if word in description:
+                    self.add_error('description', f'Слово "{word}" запрещено в поле "Description".')
 
         return cleaned_data
 
+
+class ProductDescriptionForm(ProductForm):
+    class Meta:
+        model = Product
+        fields = ('description',)
+
+
+class ProductCategoryForm(ProductForm):
+    class Meta:
+        model = Product
+        fields = ('category',)
+
+
+class ProductPublishForm(ProductForm):
+    class Meta:
+        model = Product
+        fields = ('is_published',)
 
 class VersionForm(StyleFormMixin, forms.ModelForm):
 

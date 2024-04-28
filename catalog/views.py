@@ -2,7 +2,8 @@ import secrets
 
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.forms import inlineformset_factory
 from django.shortcuts import render
@@ -10,7 +11,7 @@ from django.urls import reverse_lazy, reverse
 from django.views import View
 from pytils.translit import slugify
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductCategoryForm, ProductDescriptionForm, ProductPublishForm
 from catalog.models import Category, Product, Versions
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
@@ -86,9 +87,10 @@ class ProductDetailView(DetailView):
         return context_data
 
 
-class ProductCreateView(CreateView, LoginRequiredMixin):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'catalog:add_product'
     success_url = reverse_lazy('catalog:category_list')
 
     def form_valid(self, form):
@@ -99,10 +101,18 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
 
         return super().form_valid(form)
 
-class ProductUpdateView(UpdateView, LoginRequiredMixin):
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
+
     success_url = reverse_lazy('catalog:category_list')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.owner == self.request.user:
+            return self.object
+        raise PermissionDenied
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -127,8 +137,39 @@ class ProductUpdateView(UpdateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView, LoginRequiredMixin):
+class ProductDescriptionUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
+    form_class = ProductDescriptionForm
+    template_name = 'catalog/product_form.html'
+    permission_required = ('catalog.change_description',)
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:product_page', kwargs={'pk': self.object.pk})
+
+
+class ProductCategoryUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductCategoryForm
+    template_name = 'catalog/product_form.html'
+    permission_required = ('catalog.change_category',)
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:product_page', kwargs={'pk': self.object.pk})
+
+
+class ProductPublishUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = Product
+    form_class = ProductPublishForm
+    template_name = 'catalog/product_form.html'
+    permission_required = ('catalog.set_published',)
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:product_page', kwargs={'pk': self.object.pk})
+
+
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = Product
+    permission_required = 'catalog:delete_product'
     success_url = reverse_lazy("catalog:category_list")
 
     import secrets
