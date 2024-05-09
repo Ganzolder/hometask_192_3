@@ -15,6 +15,7 @@ from catalog.forms import ProductForm, VersionForm, ProductCategoryForm, Product
 from catalog.models import Category, Product, Versions
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
+from catalog.services import get_categories_from_cache
 from config import settings
 from users.models import User
 
@@ -68,6 +69,9 @@ class CategoryListView(ListView):
     extra_context = {
         'title': 'Категории товаров'
     }
+
+    def get_queryset(self):
+        return get_categories_from_cache()
 
 
 class ProductDetailView(DetailView):
