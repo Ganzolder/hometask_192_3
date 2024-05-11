@@ -9,13 +9,13 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+from dotenv import main
 from pathlib import Path
 import os
 from django.conf import global_settings
-from dotenv import load_dotenv
 
-load_dotenv()
+
+main.load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
